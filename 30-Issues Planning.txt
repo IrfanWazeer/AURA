@@ -1,0 +1,213 @@
+Milestone 1: Foundation (Issues 1–8)
+#1 Setup Repository, Project Layout, and Dockerization
+Labels: enhancement, setup
+
+Milestone: Milestone 1 - Foundation
+
+Description: Establish the project layout using a modern FastAPI structure. Configure a Docker Compose pipeline that spins up localized PostgreSQL and Redis containers, sets up basic poetry/pip dependency pinning, and integrates linting/formatting workflows via pre-commit hooks.
+
+#2 Configure Async SQLAlchemy 2.0 Database Layer
+Labels: feature, database
+
+Milestone: Milestone 1 - Foundation
+
+Description: Create the core async engine and database session lifecycle management using asyncpg. Build the underlying SQLAlchemy 2.0 base classes, set up auto-generated relational UUID schemas for users, tasks, goals, and habits, and configure an Alembic migration system.
+
+#3 Implement User Authentication & Core Pydantic Schemas
+Labels: feature, security
+
+Milestone: Milestone 1 - Foundation
+
+Description: Implement stateless JWT authentication featuring secure password hashing (using Passlib/Bcrypt). Define robust Pydantic schemas handling data serialization, input validation, and user profile updates, guaranteeing strong interface boundaries for the client application.
+
+#4 Build Task Management REST API Endpoints
+Labels: feature
+
+Milestone: Milestone 1 - Foundation
+
+Description: Construct complete async CRUD endpoints for task resource management (/api/v1/tasks). Implement efficient server-side pagination, strict ownership access controls (ensuring users can only modify their own tasks), and multi-criteria sorting parameters.
+
+#5 Build Goals & Objectives Tracking Endpoints
+Labels: feature
+
+Milestone: Milestone 1 - Foundation
+
+Description: Implement high-level CRUD endpoints tracking user goals, milestone categories, and historical target dates (/api/v1/goals). Write custom route validation hooks ensuring goal completion percentages increment logically based on updates.
+
+#6 Build Habit Tracker and Streak Mechanics API
+Labels: feature
+
+Milestone: Milestone 1 - Foundation
+
+Description: Deliver REST endpoints managing habit creation, frequency tracking, and check-ins (/api/v1/habits). Design explicit transactional service logic calculating streak behaviors, ensuring back-to-back logs trigger proper database mutations on user statistics.
+
+#7 Implement Global Error Handling and Request Middleware
+Labels: enhancement
+
+Milestone: Milestone 1 - Foundation
+
+Description: Write global FastAPI exception handlers intercepting database integrity violations, validation failures, and authorization anomalies. Bundle this with standardized structural JSON responses and a basic structured logger monitoring runtime anomalies.
+
+#8 Create End-to-End Test Suite for Core API Surfaces
+Labels: testing
+
+Milestone: Milestone 1 - Foundation
+
+Description: Set up a dedicated testing framework utilizing pytest and httpx.AsyncClient. Wire up a distinct, temporary Docker-driven testing database that automatically runs migrations, executes integration tests across all baseline endpoints, and tears down safely.
+
+Milestone 2: AI Agents (Issues 9–16)
+#9 Initialize LangGraph Infrastructure and State Definitions
+Labels: feature, ai-agent
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Set up LangGraph to establish stateful multi-agent orchestrations. Define the core operational system states, token budget safeguards, and foundational schemas required to pipe data seamlessly between distinct LLM node functions.
+
+#10 Implement Core Router & Orchestrator Agent
+Labels: feature, ai-agent
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Construct the primary Orchestrator node inside LangGraph, leveraging semantic intent routing. This agent analyzes raw natural language prompts from the user, decides which downstream sub-agent to invoke, and manages the main execution state.
+
+#11 Build Autonomous Task and Daily Planner Agent
+Labels: feature, ai-agent
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Develop a planning sub-agent dedicated to examining a user's calendar commitments, pending tasks, and active goals. The agent automatically writes structured JSON schedules that break down complex items into contextually smart micro-tasks.
+
+#12 Integrate Vector Embeddings & Vector Database Setup
+Labels: feature, infra
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Provision a localized vector infrastructure instance (such as pgvector or Qdrant) within the core codebase. Build a modular utility service that parses unstructured user interactions, text blobs, and daily journals into high-dimensional semantic embeddings.
+
+#13 Implement Ephemeral Short-Term Memory Buffer
+Labels: enhancement, ai-agent
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Configure a structured Redis-backed sliding window memory cache tracking active session contexts. This provides the LLM orchestrator with short-term historical message states, resolving conversational pronouns and maintaining thread cohesion.
+
+#14 Develop Semantic Long-Term Episodic Memory Retrieval
+Labels: feature, ai-agent
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Establish a long-term episodic retrieval layer that matches incoming queries against old vector logs. This allows AURA to automatically surface a user's past preferences, behavioral quirks, and explicitly stated boundaries during chat execution.
+
+#15 Connect Database Tools to LangGraph Execution Nodes
+Labels: feature
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Design functional, heavily sandboxed Python tools that allow AI agents to safely write, update, or read from the PostgreSQL database layer. Ensure execution limits explicitly restrict an agent's capability to only access records belonging to the authenticated session user.
+
+#16 Build Agent Streaming Interface and WebSocket Server
+Labels: feature
+
+Milestone: Milestone 2 - AI Agents
+
+Description: Replace standard blocking REST execution with an asynchronous FastAPI WebSocket server endpoint (/api/v1/agent/stream). Stream granular agent execution states, node-switching metadata, and real-time LLM token tokens back to the user client.
+
+Milestone 3: Integrations (Issues 17–24)
+#17 Implement Google/Outlook Calendar OAuth2 Sync Workflow
+Labels: feature, integrations
+
+Milestone: Milestone 3 - Integrations
+
+Description: Create multi-tenant OAuth2 credential capture flows authorizing backend operations on external calendars. Code background synchronization utilities handling refresh token lifecycles and loading events directly into the internal schedule schema.
+
+#18 Set Up Celery Worker Infrastructure with Redis Broker
+Labels: feature, infra
+
+Milestone: Milestone 3 - Integrations
+
+Description: Decouple time-intensive operations from the primary API loop by provisioning a distributed Celery worker process. Hook it up to Redis as the messaging broker and configure structured logging metrics tracking successful background job execution.
+
+#19 Deploy Periodic Cron Tasks for Daily Review Automation
+Labels: feature
+
+Milestone: Milestone 3 - Integrations
+
+Description: Configure Celery Beat schedulers triggering automated system routines at predefined timestamps. This routine automatically analyzes midnight habit streaks, flags expired uncompleted tasks, and resets daily status records across the database.
+
+#20 Implement Asynchronous Webhook Receiver Framework
+Labels: feature
+
+Milestone: Milestone 3 - Integrations
+
+Description: Build ultra-fast public webhook endpoints capable of capturing unexpected external status mutations (e.g., calendar schedule changes or external API updates). Use a decoupled architecture that drops payloads onto an asynchronous worker queue for immediate validation.
+
+#21 Write Advanced Redis Layer for App-Wide Response Caching
+Labels: enhancement, infra
+
+Milestone: Milestone 3 - Integrations
+
+Description: Intercept read-heavy, low-velocity core data requests using custom FastAPI route-decorator middlewares. Implement smart cache invalidation keys that wipe specific Redis namespaces whenever a mutation occurs on a user's target model.
+
+#22 Configure Centralized Task Failure Alert Notifications
+Labels: enhancement
+
+Milestone: Milestone 3 - Integrations
+
+Description: Build a dispatch notification worker capable of pushing real-time alerts across multiple channels (WebSockets, email, or messaging apps) when background sync runs fail. This guarantees data synchronization anomalies don't quietly pile up.
+
+#23 Integrate Advanced DB Transaction Constraints for Concurrency
+Labels: bug, database
+
+Milestone: Milestone 3 - Integrations
+
+Description: Harden database integrity rules against race conditions stemming from background threads. Implement database-level row locks (SELECT FOR UPDATE) on critical operations, preventing dual streak-increments or duplicated goal creation.
+
+#24 Standardize Integration Error Resiliency (Circuit Breakers)
+Labels: enhancement
+
+Milestone: Milestone 3 - Integrations
+
+Description: Protect system availability by wrapping third-party API connections inside a software circuit breaker pattern. Ensure the app-layer fails gracefully using local data caches if upstream provider connections go offline.
+
+Milestone 4: Intelligence (Issues 25–30)
+#25 Build Weekly Aggregation Data Analytics Engines
+Labels: feature
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Build advanced SQL aggregation queries that compute comprehensive productivity data over rolling weekly windows. This engine evaluates target ratios, tracking habit completion frequencies alongside task lifecycle velocities.
+
+#26 Develop LLM-Driven Behavioral Insight Generator Node
+Labels: feature, ai-agent
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Construct a background intelligence node that pipes raw weekly performance metrics directly through a specialized prompting agent. This system uncovers hidden behavioral roadblocks, highlighting patterns like "declining task completions on late-night items."
+
+#27 Implement Dynamic Adaptive Task Priority Engine
+Labels: feature
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Design an ML-inspired context engine that dynamically updates task sorting priorities based on user habits. For example, if a user misses a habit deadline three times in a row, the engine shifts upcoming dependencies to prevent a cascade of failures.
+
+#28 Build Proactive Daily Briefing Notification Dispatcher
+Labels: feature
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Code a personalized morning messaging system that delivers actionable daily briefings via email or WebSockets. This syncs long-term overarching goals down into immediate micro-actions, prepping the user for their day ahead.
+
+#29 Set Up Data Retention, Anonymization, and Purge Scripts
+Labels: feature, security
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Secure user privacy by writing compliance operations that scrub personally identifiable information (PII) on demand. Implement hard cascade deletion functions across the entire graph to fulfill account termination requests instantly.
+
+#30 Optimize Vector Space Indexing and LangGraph Architecture
+Labels: enhancement
+
+Milestone: Milestone 4 - Intelligence
+
+Description: Perform an end-to-end performance audit. Optimize vector search speeds using HNSW indexes, fine-tune the routing weights of the LangGraph agent chain to reduce total token overhead, and establish a reliable, responsive user experience.
