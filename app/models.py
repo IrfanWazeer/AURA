@@ -18,6 +18,7 @@ class User(Base):
     )
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
     name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    hashed_password = mapped_column(String, nullable=False)
     timezone: Mapped[str] = mapped_column(String(50), default="UTC", server_default="UTC")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), 

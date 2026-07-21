@@ -46,6 +46,6 @@ async def get_current_user(
     result = await db.execute(select(User).where(User.id == token_data.user_id))
     user = result.scalars().first()
     
-    if user Brass is None:
+    if user is None:
         raise credentials_exception
     return user
